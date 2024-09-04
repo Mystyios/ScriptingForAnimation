@@ -1,0 +1,52 @@
+// create base sphere
+polySphere -radius 3 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 -createUVs 2 -constructionHistory 1;
+move -relative -objectSpace -worldSpaceDistance 0 3 0;
+
+// create middle sphere
+polySphere -radius 1 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 -createUVs 2 -constructionHistory 1;
+polySphere -e -radius 2;
+move -relative -objectSpace -worldSpaceDistance 0 7 0;
+
+// create head sphere
+polySphere -radius 1 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 -createUVs 2 -constructionHistory 1;
+move -relative -objectSpace -worldSpaceDistance 0 9.5 0;
+
+// create nose cone
+polyCone -r 1 -h 2 -sx 20 -sy 1 -sz 0 -ax 0 1 0 -rcp 0 -cuv 3 -ch 1;
+rotate -r -os -fo 90 0 0;
+move -r 0 9.5 1;
+scale -r 0.25 0.25 0.25;
+
+// create left eye
+polySphere -radius 1 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 -createUVs 2 -constructionHistory 1;
+scale -r 0.225 0.225 0.1;
+move -r 0.4 9.8 0.8;
+rotate -r -os -fo -13.5 23 0;
+
+// create right eye
+polySphere -radius 1 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 -createUVs 2 -constructionHistory 1;
+scale -r 0.225 0.225 0.1;
+move -r -0.4 9.8 0.8;
+rotate -r -os -fo -20 -23 0;
+
+// create left arm
+polyCylinder -r 1 -h 2 -sx 20 -sy 1 -sz 1 -ax 0 1 0 -rcp 0 -cuv 3 -ch 1;
+scale -r 0.16 1.7 0.16;
+move -r 2.8 6.6 0;
+rotate -r -os -fo 0 0 42.8;
+
+// create right arm
+polyCylinder -r 1 -h 2 -sx 20 -sy 1 -sz 1 -ax 0 1 0 -rcp 0 -cuv 3 -ch 1;
+scale -r 0.16 1.7 0.16;
+move -r -2.8 6.6 0;
+rotate -r -os -fo 0 0 -42.8;
+
+// create mouth
+polySphere -radius 1 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 -createUVs 2 -constructionHistory 1;
+scale -r 0.104 0.104 0.104;
+move -r 0 9.091 0.91;
+rotate -r -os -fo 15.677;
+duplicate -rr;
+move -r 0.2 0.1 -0.025;
+duplicate -rr;
+move-r -0.4 0 0;
