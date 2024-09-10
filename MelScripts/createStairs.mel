@@ -1,0 +1,23 @@
+ float $height = 4;
+ float $depth = 3;
+ float $width = 4;
+ int $numStairs = 10;
+ string $selStair;
+ string $temp[];
+
+// build first stair
+ $temp = `polyCube -depth $depth - width $width -height $height -sx 1 -sy 1 -sz 1 -ax 0 1 0 -createUVs 4 -ch 1`;
+ $selStair = $temp[0];
+ // move to ground plane
+ xform -worldSpace -translation 0 ($height/2) 0 $selStair;
+
+for($i=0; $i<$numStairs; $i++)
+{
+    $temp = `duplicate -returnRootsOnly $selStair`;
+    $selStair = $temp[0];
+    xform -relative - objectSpace -translation 0 $height (-$depth);
+}
+
+
+
+

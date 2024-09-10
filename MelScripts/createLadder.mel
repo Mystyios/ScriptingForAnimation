@@ -1,0 +1,32 @@
+float $height = 25;
+float $rungHeight = 1;
+float $angle = 10;
+int $rungNum = 7;
+float $width = 15;
+float $depth = 0.5;
+string $temp[];
+string $allObjects[];
+string $selObject;
+
+$temp = `polyCylinder -height $height -radius $depth`;
+$selObject = $temp[0];
+xform -worldSpace -translation (-$width/2) ($height/2) 0 $selObject;
+
+$temp = `duplicate -returnRootsOnly $selObject`;
+$selObject = $temp[0];
+xform -worldSpace -translation ($width/2) ($height/2) 0 $selObject;
+
+$temp = `polyCube -depth ($depth/2) -width ($width) -height $rungHeight`;
+$selObject = $temp[0];
+xform -worldSpace -translation 0 $rungHeight 0 $selObject;
+
+for($i=1; $i<$rungNum; $i++)
+{
+    $temp = `duplicate -returnRootsOnly $selObject`;
+    $selObject = $temp[0];
+    xform -relative -objectSpace -translation 0 (($height - $rungHeight)/($rungNum - 1)) 0 $selObject;
+}
+
+polyUnite -ch 1 -mergeUVSets 1 -centerPivot -name pCylinder1 pCylinder1 pCylinder2 pCube1 pCube2 pCube3 pCube4 pCube5 pCube6 pCube7;
+select -all;
+rotate -worldSpace -rotateX $angle;
