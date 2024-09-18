@@ -10,35 +10,28 @@ string $selObject;
 
 $temp = `polyCylinder -height $height -radius $depth`;
 $selObject = $temp[0];
-stringArrayInsertAtIndex(-1, $allObjects, $selObject);
+$allObjects[`size $allObjects`] = $selObject;
 xform -worldSpace -translation (-$width/2) ($height/2) 0 $selObject;
 
 $temp = `duplicate -returnRootsOnly $selObject`;
 $selObject = $temp[0];
-stringArrayInsertAtIndex(-1, $allObjects, $selObject);
+$allObjects[`size $allObjects`] = $selObject;
 xform -worldSpace -translation ($width/2) ($height/2) 0 $selObject;
 
 $temp = `polyCube -depth ($depth/2) -width ($width) -height $rungHeight`;
 $selObject = $temp[0];
-stringArrayInsertAtIndex(-1, $allObjects, $selObject);
+$allObjects[`size $allObjects`] = $selObject;
 xform -worldSpace -translation 0 $rungHeight 0 $selObject;
 
 for($i=1; $i<$rungNum; $i++)
 {
     $temp = `duplicate -returnRootsOnly $selObject`;
     $selObject = $temp[0];
-    stringArrayInsertAtIndex(-1, $allObjects, $selObject);
+    $allObjects[`size $allObjects`] = $selObject;
     xform -relative -objectSpace -translation 0 (($height - $rungHeight)/($rungNum - 1)) 0 $selObject;
 }
 
-/*
+$temp = `polyUnite -caching 1 -mergeUVSets 1 -centerPivot $allObjects`;
+$selObject = $temp[0];
+xform -worldSpace -rotation $angle 0 0 $selObject;
 
-    Need help figuring out how to select all objects from an array.
-
-polyUnite -ch 1 -mergeUVSets 1 -centerPivot -name $allObjects[0] $allObjects[1];
-select -all;
-rotate -worldSpace -rotateX $angle;
-
-xform -boundingBox -q "objectname";
-xform -pivots 0 0 0 "object name";
-*/
