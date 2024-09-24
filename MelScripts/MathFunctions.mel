@@ -1,0 +1,78 @@
+proc float addNumbers (float $input[])
+{
+    float $temp = 0; 
+    for ($i = 0; $i < size($input); $i++)
+    {
+        $temp += $input[$i];
+    }
+    return $temp;
+}
+
+proc float subtractNumbers (float $input[])
+{
+    float $temp = $input[0];
+    for ($i = 1; $i < size($input); $i++)
+    {
+        $temp -= $input[$i];
+    }
+    return $temp;
+}
+
+proc float multiplyNumbers (float $input[])
+{
+    float $temp = $input[0]; 
+    for ($i = 1; $i < size($input); $i++)
+    {
+        $temp *= $input[$i];
+    }
+    return $temp;
+}
+
+proc float divideNumbers (float $input[])
+{
+    float $temp = $input[0]; 
+    for ($i = 1; $i < size($input); $i++)
+    {
+        $temp /= $input[$i];
+    }
+    return $temp;
+}
+
+proc float powerNumbers (float $input[])
+{
+    float $temp = $input[0];
+    if ($input[1] == 0)
+    {
+        $temp = 1;
+    }
+    else
+    {
+        for ($i = 1; $i < $input[1]; $i++)
+        {
+        $temp *= $input[0];
+        }
+    } 
+    
+    return $temp;
+}
+
+proc float meanNumbers (float $input[])
+{
+    float $temp = addNumbers($input) / size($input); 
+    return $temp;
+}
+
+proc float medianNumbers (float $input[])
+{
+    float $tempArray[] = `sort $input`;
+    float $temp;
+    if (size($tempArray) % 2 == 0)
+    {
+        $temp = meanNumbers({$tempArray[size($input)/2], $tempArray[size($input)/2 - 1]});
+    }
+    else
+    {
+        $temp = $tempArray[(size($input)/ 2)];
+    }
+    return $temp;
+}
