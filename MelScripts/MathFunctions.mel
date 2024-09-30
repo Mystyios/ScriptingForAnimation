@@ -76,3 +76,42 @@ proc float medianNumbers (float $input[])
     }
     return $temp;
 }
+
+proc Calculator (float $input[], string $operation)
+{
+    float $result;
+    
+    switch ($operation)
+    {
+        case "addition":
+            $result = addNumbers($input);
+            break;
+        case "subtraction":
+            $result = subtractNumbers($input);
+            break;
+        case "division":
+            $result = divideNumbers($input);
+            break;
+        case "power":
+            $result = powerNumbers($input);
+            break;
+        case "mean":
+            $result = meanNumbers($input);
+            break;
+        case "median":
+            $result = medianNumbers($input);
+            break;
+    }
+
+    string $printString = "The " + $operation + " result of ";
+    for ($i = 0; $i < size($input); $i++)
+    {
+        $printString += ($input[$i] + ", ");
+    }
+    $printString += ("is " + $result);
+
+    print ($printString + "\n");
+}
+
+//Example Use of Calculator Function:
+Calculator({5, 2, 8, 9}, "mean");
