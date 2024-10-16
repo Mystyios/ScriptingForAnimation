@@ -1,0 +1,72 @@
+global proc randPlacement()
+{
+    string $field1 = `optionVar -q "dupNum"`;
+    string $field2 = `optionVar -q "minX"`;
+    string $field3 = `optionVar -q "minY"`;
+    string $field4 = `optionVar -q "minZ"`;
+    string $field5 = `optionVar -q "maxX"`;
+    string $field6 = `optionVar -q "maxY"`;
+    string $field7 = `optionVar -q "maxZ"`;
+
+    int $dupNum = `intField -q -value $field1`;
+    float $minX = `floatField -q -value $field2`;
+    float $minY = `floatField -q -value $field3`;
+    float $minZ = `floatField -q -value $field4`;
+    float $maxX = `floatField -q -value $field5`;
+    float $maxY = `floatField -q -value $field6`;
+    float $maxZ = `floatField -q -value $field7`;
+
+    string $sels[] = `ls - sl`;
+    string $temp;
+
+    for ($i = 0; $i < $dupNum; $i++)
+    {
+        for ($j = 0; $j < size($sels); $j++)
+        {
+            $temp = $sels[$j];
+            duplicate $temp;
+            float $xValue = `rand $minX $maxX`;
+            float $yValue = `rand $minY $maxY`;
+            float $zValue = `rand $minZ $maxZ`;
+            xform -worldSpace -translation $xValue $yValue $zValue $temp;
+        }
+    }
+}
+
+string $mWindow = "uiWindow";
+
+if (`window -exists $mWindow`)
+    deleteUI $mWindow;
+
+$mWindow = `window -height 300
+                    -title "Random Placement"
+                    -sizeable 1
+                    -width 400
+                    $mWindow`;
+string $mColumn = `columnLayout -adjustableColumn 1
+                                -parent $mWindow`;
+rowLayout -numberOfColumns 2 -adjustableColumn 2 -parent $mColumn;
+text "Number of Duplicates";
+optionVar -stringValue "dupNum" `intField -ann "Duplicate Number"`;
+rowLayout -numberOfColumns 2 -adjustableColumn 2 -parent $mColumn;
+text "X Minimum";
+optionVar -stringValue "minX" `floatField`;
+rowLayout -numberOfColumns 2 -adjustableColumn 2 -parent $mColumn;
+text "Y Minimum";
+optionVar -stringValue "minY" `floatField`;
+rowLayout -numberOfColumns 2 -adjustableColumn 2 -parent $mColumn;
+text "Z Minimum";
+optionVar -stringValue "minZ" `floatField`;
+rowLayout -numberOfColumns 2 -adjustableColumn 2 -parent $mColumn;
+text "X Maximum";
+optionVar -stringValue "maxX" `floatField`;
+rowLayout -numberOfColumns 2 -adjustableColumn 2 -parent $mColumn;
+text "Y Maximum";
+optionVar -stringValue "maxY" `floatField`;
+rowLayout -numberOfColumns 2 -adjustableColumn 2 -parent $mColumn;
+text "Z Maximum";
+optionVar -stringValue "maxZ" `floatField`;
+
+button -parent $mColumn -label "Randomize Selection" -command randPlacement;
+showWindow $mWindow;
+//randPlacement(5, -10, -10, -10, 10, 10, 10);

@@ -1,0 +1,22 @@
+//Returns an array of selected objects
+//ls -sl;
+
+//Returns the bounding box of an object. The values returned are in the following order: xmin ymin zmin xmax ymax zmax
+//-xform -q -boundingBox;
+
+proc CenterLoc()
+{
+    string $sels[] = `ls - sl`;
+
+    float $bbox[] = `xform -q -boundingBox $sels`;
+    
+    float $centerX = ($bbox[0] + $bbox[3]) / 2;
+    float $centerY = ($bbox[1] + $bbox[4]) / 2;
+    float $centerZ = ($bbox[2] + $bbox[5]) / 2;
+
+    string $loc[] = `spaceLocator -position 0 0 0`;
+
+    xform -worldSpace -translation $centerX $centerY $centerZ $loc[0];
+}
+
+CenterLoc();
