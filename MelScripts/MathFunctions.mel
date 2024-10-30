@@ -89,6 +89,9 @@ proc Calculator (float $input[], string $operation)
         case "subtraction":
             $result = subtractNumbers($input);
             break;
+        case "multiplication":
+            $result = multiplyNumbers($input);
+            break;
         case "division":
             $result = divideNumbers($input);
             break;
